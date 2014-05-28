@@ -1,0 +1,24 @@
+{
+  "name": "meister-rechner",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app",
+    "test": "node ./node_modules/mocha/bin/mocha --reporter spec test"
+  },
+  "dependencies": {
+    "express": "3.x",
+    "connect-multiparty": "~1.0.3",
+    "jade": "*",
+    "strftime": "0.5.1",
+    "q": "~0.9.7",
+    "randomstring": "~1.0.2",
+    "lodash": "~2.4.0",
+    "async": "~0.2.9",
+    "winston": "~0.7.3",
+    "connect-session-file": "~1.0.4"
+  },
+  "devDependencies": {
+    "mocha": "1.x"
+  }
+}

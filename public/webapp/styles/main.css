@@ -1,0 +1,68 @@
+body {
+  min-height: 1000px;
+  padding-top: 70px;
+}
+
+
+.full-container {
+  padding: 0 15px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.container {
+  margin-right: 10px;
+  margin-left: 10px;
+  max-width:100%;
+}
+
+.navbar-brand {
+  font-size: 16pt;
+}
+
+.jumbotron {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.input-lg {
+  height: 64px;
+  padding: 6px 5px;
+  font-size: 24pt;
+  line-height: 1.33;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.center {
+  text-align: center
+}
+
+.vcenter {
+  margin-top:20px;
+}
+
+.badge-lg{
+  font-size:22px;
+}
+
+.badge-success {
+  background-color: #5cb85c;
+}
+
+.badge-error {
+  background-color: #d9534f;
+}
+
+.calculation {
+  padding-bottom: 20px;
+  border-bottom: solid 1px #cccccc;
+}
+
+.check-calc {
+  padding-right: 20px;
+}
+
+.font-large {
+  font-size:24pt;
+}
