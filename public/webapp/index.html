@@ -28,7 +28,7 @@
 
     <div class="full-container">
 
-        <div class="navbar navbar-fixed-top navbar-default" role="navigation">
+        <div class="navbar navbar-fixed-top navbar-default" role="navigation" ng-controller="MenuController">
           <div class="full-container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -47,21 +47,14 @@
                 <li><a href="#/highscore">Punktestand</a></li>
               </ul>
               <ul class="pull-right nav navbar-nav">
-                <li><a href="#/account">[Benutzer]</a></li>
+                <li><a href="#" class="account-name" ng-click="changePlayerName()"> <i class="fa fa-user"></i> {{ playerName }}</a></li>
               </ul>
             </div>
           </div><!-- /.container -->
         </div><!-- /.navbar -->
 
 
-        <div class="jumbotron">
-            <h2><img src="images/calculator.png" title="Rechner" /> Hallo Rechen Kaiser!
-            <span class="pull-right">
-                <button type="button" class="btn btn-large btn-success font-large"><i class="fa fa-check-square-o"></i> Auflösung</button>
-            </span>
-            </h2>
-            <p>Löse die Rechnungen und sammle Punkte!!!</p>
-        </div>
+        
 
     	<!-- angular content here -->
     	<div ng-view>
@@ -87,6 +80,8 @@
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         
         <script src="scripts/index.js"></script>
 

@@ -23,6 +23,11 @@ body {
 .jumbotron {
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.input-inline {
+  display: inline;
 }
 
 .input-lg {
@@ -32,6 +37,8 @@ body {
   line-height: 1.33;
   border-radius: 6px;
   text-align: center;
+  width: 100px;
+  vertical-align: super;
 }
 
 .center {
@@ -40,6 +47,14 @@ body {
 
 .vcenter {
   margin-top:20px;
+}
+
+.badge-block {
+  margin-right: 30px;
+}
+
+.badge {
+  vertical-align: super;
 }
 
 .badge-lg{
@@ -56,7 +71,7 @@ body {
 
 .calculation {
   padding-bottom: 20px;
-  border-bottom: solid 1px #cccccc;
+  
 }
 
 .check-calc {
@@ -66,3 +81,49 @@ body {
 .font-large {
   font-size:24pt;
 }
+
+.calc-number {
+  height: 64px;
+  padding: 6px 5px;
+  font-size: 34pt;
+  font-weight: bold;
+  line-height: 1.33;
+  border-radius: 6px;
+  text-align: center;
+  display:inline-block;
+  width: 100px;
+}
+
+.success {
+  color: #13987e;
+}
+
+.info {
+  color: #2383c4;
+}
+
+.primary {
+  color: #1e2a36;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.carousel-indicators {
+  position: relative;
+  bottom: 0px;
+}
+
+.carousel-indicators .active {
+  background-color:black;
+}
+
+.carousel-indicators li {
+  border: 1px solid black;
+}
+
+.account-name {
+  font-size: 20pt;
+}
+

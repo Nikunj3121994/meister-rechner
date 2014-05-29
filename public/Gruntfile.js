@@ -266,18 +266,6 @@ module.exports = function (grunt) {
           },
           {
             expand: true,
-            cwd: 'webapp/bower_components/bootstrap-datepicker/css',
-            dest: '.tmp/bower_components/bootstrap-datepicker/css',
-            src: 'datepicker.css'
-          },
-          {
-            expand: true,
-            cwd: 'webapp/bower_components/famfamfam-flags-sprite/src',
-            dest: '.tmp/bower_components/famfamfam-flags-sprite/src',
-            src: 'flags-sprite.css'
-          },
-          {
-            expand: true,
             cwd: 'webapp/bower_components/font-awesome/css',
             dest: '.tmp/bower_components/font-awesome/css',
             src: 'font-awesome.min.css'
@@ -287,12 +275,6 @@ module.exports = function (grunt) {
             cwd: 'webapp/bower_components/angular-loading-bar/build',
             dest: '.tmp/bower_components/angular-loading-bar/build',
             src: 'loading-bar.css'
-          },
-          {
-            expand: true,
-            cwd: 'webapp/bower_components/selectize/dist/css',
-            dest: '.tmp/bower_components/selectize/dist/css',
-            src: 'selectize.bootstrap3.css'
           }
         ]
       },

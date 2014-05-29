@@ -1,4 +1,4 @@
-  'use strict';
+'use strict';
 
 
 function escapeRegExp(string) {
@@ -36,7 +36,7 @@ function getRandomInt (min, max) {
 angular.module('calcApp')
     
     // found here: http://stackoverflow.com/questions/10931315/how-to-preventdefault-on-anchor-tags-in-angularjs
-    .directive('a', function() {
+    .directive('abc', function() {
         return {
             restrict: 'E',
             link: function(scope, elem, attrs) {
@@ -51,4 +51,5 @@ angular.module('calcApp')
             }
         };
     });
+
     

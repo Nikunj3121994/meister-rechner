@@ -6,6 +6,7 @@ var calcApp = angular.module('calcApp', [
     'ngResource',
     'ngRoute',
     'ngCookies',
+    'ui.bootstrap',                     // angular-ui bootstrap elelments
     'chieffancypants.loadingBar'        // loading indicator for xhr requests
   ]);
 

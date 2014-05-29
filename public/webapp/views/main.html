@@ -1,133 +1,127 @@
+<div class="jumbotron">
+    <h2><img src="images/calculator.png" title="Rechner" /> Hallo <span ng-if="playerName !== 'NIEMAND'">{{ CalcApp.user }}, <span>Rechen-Kaiser!
+    <span class="pull-right">
+        <button type="button" class="btn btn-large btn-success font-large"><i class="fa fa-check-square-o"></i> Auflösung</button>
+    </span>
+    </h2>
+    <p>Löse die Rechnungen und sammle Punkte!!!</p>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div style="text-align:center">
+      <h4 class="info"><i class="fa fa-star"></i> Level 1</h4>
+    </div>
+    <ol class="carousel-indicators">
+      <li class="active"></li>
+      <li class=""></li>
+      <li class=""></li>
+      <li class=""></li>
+      <li class=""></li>
+    </ol>
+
+  </div>
+</div>
+
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
-    <h3>Rechnung 1</h3>
 
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rechnung 1</h3>
       </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg badge-success">+</span>
+      <div class="panel-body">
+        
+        <span class="calc-number info">4</span> <span class="badge badge-lg badge-success">+</span> <span class="calc-number info">4</span> <span class="badge badge-lg badge-block">=</span> 
+        <input type="text" class="form-control input-lg input-inline" placeholder="??"/>
+
       </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg">=</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" placeholder="??"/>
-      </div>
-    </div>
+    </div>  
     
   </div><!--/span-->
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
-    <h3>Rechnung 2</h3>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rechnung 2</h3>
+      </div>
+      <div class="panel-body">
+        
+        <span class="calc-number info">4</span> <span class="badge badge-lg badge-error">+</span> <span class="calc-number info">4</span> <span class="badge badge-lg badge-block">=</span> 
+        <input type="text" class="form-control input-lg input-inline" placeholder="??"/>
 
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
       </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg badge-error">-</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg">=</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" placeholder="??"/>
-      </div>
-    </div>
+    </div>  
    
   </div><!--/span-->
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
-    <h3>Rechnung 3</h3>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rechnung 3</h3>
+      </div>
+      <div class="panel-body">
+        
+        <span class="calc-number info">4</span> <span class="badge badge-lg badge-error">+</span> <span class="calc-number info">4</span> <span class="badge badge-lg badge-block">=</span> 
+        <input type="text" class="form-control input-lg input-inline" placeholder="??"/>
 
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
       </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg badge-error">-</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg">=</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" placeholder="??"/>
-      </div>
-    </div>
-  </div><!--/span-->
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
-    <h3>Rechnung 4</h3>
-
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg badge-success">+</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg">=</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" placeholder="??"/>
-      </div>
-    </div>
-
-  </div><!--/span-->
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
-    <h3>Rechnung 5</h3>
-
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg badge-error">-</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
-      </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg">=</span>
-      </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" placeholder="??"/>
-      </div>
-    </div>
+    </div>  
     
   </div><!--/span-->
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
-    <h3>Rechnung 6</h3>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rechnung 4</h3>
+      </div>
+      <div class="panel-body">
+        
+        <span class="calc-number info">4</span> <span class="badge badge-lg badge-success">+</span> <span class="calc-number info">4</span> <span class="badge badge-lg badge-block">=</span> 
+        <input type="text" class="form-control input-lg input-inline" placeholder="??"/>
 
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
       </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg badge-success">+</span>
+    </div>  
+
+  </div><!--/span-->
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rechnung 5</h3>
       </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" value="4"/>
+      <div class="panel-body">
+        
+        <span class="calc-number info">4</span> <span class="badge badge-lg badge-error">+</span> <span class="calc-number info">4</span> <span class="badge badge-lg badge-block">=</span> 
+        <input type="text" class="form-control input-lg input-inline" placeholder="??"/>
+
       </div>
-      <div class="col-xs-2 center vcenter">
-        <span class="badge badge-lg">=</span>
+    </div>  
+    
+  </div><!--/span-->
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 calculation">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rechnung 6</h3>
       </div>
-      <div class="col-xs-2">
-        <input type="text" class="form-control input-lg" placeholder="??"/>
+      <div class="panel-body">
+        
+        <span class="calc-number info">4</span> <span class="badge badge-lg badge-success">+</span> <span class="calc-number info">4</span> <span class="badge badge-lg badge-block">=</span> 
+        <input type="text" class="form-control input-lg input-inline" placeholder="??"/>
+
       </div>
-    </div>
+    </div>  
     
   </div><!--/span-->
 </div>
+
+
+<script type="text/ng-template" id="myModalContent.html">
+    <form role="form" name="form1" novalidate>
+      <div class="modal-header">
+          <h3 class="modal-title">Ein neuer Mitspieler!</h3>
+      </div>
+      <div class="modal-body">
+          <input type="text" class="form-control" placeholder="Bitte gib deinen Namen ein!" ng-model="playerName" required/>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="ok(form1.$valid)" ng-disabled="form1.$invalid">Weiter</button>
+      </div>
+  </form>
+</script>
