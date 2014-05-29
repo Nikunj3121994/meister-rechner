@@ -16,8 +16,8 @@ calcApp.controller('MenuController', ['$scope', '$rootScope', function($scope, $
   /**
    * pass the playerName of the targetScope onto this scope
    */
-  var unbind = $rootScope.$on('::changePlayerEvent', function(args){
-    $scope.playerName = args.targetScope.playerName;
+  var unbind = $rootScope.$on('::changePlayerEvent', function(args, playerName){
+    $scope.playerName = playerName;
     args.stopPropagation(); // ok - done here
   });
   $scope.$on('$destroy', unbind);
@@ -33,7 +33,13 @@ calcApp.controller('MenuController', ['$scope', '$rootScope', function($scope, $
 }]);
 
 
-calcApp.controller('MainController', ['$scope','$rootScope', 'storageService','$location', '$modal', function ($scope, $rootScope, storageService, $location, $modal) {
+calcApp.controller('MainController', ['$scope',
+  '$rootScope',
+  'storageService',
+  '$location',
+  '$modal',
+  '$http',
+  function ($scope, $rootScope, storageService, $location, $modal, $http) {
 
   var calcApp = {};
 
@@ -79,7 +85,7 @@ calcApp.controller('MainController', ['$scope','$rootScope', 'storageService','$
         storageService.set('CalcApp', calcApp);
       
         // tell other controllers, that the playerName has changed
-        $scope.$emit('::changePlayerEvent');
+        $rootScope.$emit('::changePlayerEvent', calcApp.user);
 
       } catch(err) {
         console.log(err);
@@ -108,14 +114,40 @@ calcApp.controller('MainController', ['$scope','$rootScope', 'storageService','$
     };
   };
 
+
+  // ------------------------------------------------------
+  // event bus
+  // ------------------------------------------------------
+
   /**
    * event handling. a change of player was requestd, display the modal dialog
    */
-  var unbind = $rootScope.$on('::startChangePlayerEvent', function(args){
+  var changePlayer = $rootScope.$on('::startChangePlayerEvent', function(args){
     args.stopPropagation(); // stop the event here
     $scope.modalOpen();
   });
-  $scope.$on('$destroy', unbind);
+  $scope.$on('$destroy', changePlayer);
+
+  /**
+   * fetch calculation event
+   */
+  var newCalculation = $rootScope.$on('::fetchNewCalculationEvent', function(args, level){
+    args.stopPropagation(); // stop the event here
+    console.log('Fetch calculation! ' + level);
+
+    $http.get('./api/1.0/calculation/' + level).success(function(data) {
+
+      // got the data - preset the selection
+      $scope.CalcApp.calculation = data;
+      console.log($scope.CalcApp);
+
+    })
+    .error( function(data, status, headers) {
+      alert('Error: ' + data + '\nHTTP-Status: ' + status);
+    });
+
+  });
+  $scope.$on('$destroy', newCalculation);
 
 
   // ------------------------------------------------------
@@ -125,18 +157,25 @@ calcApp.controller('MainController', ['$scope','$rootScope', 'storageService','$
   // check if there is a local user
   if(storageService.get('CalcApp') && storageService.get('CalcApp').user) {
     $scope.CalcApp.user = storageService.get('CalcApp').user;
+    $scope.CalcApp.level = storageService.get('CalcApp').level || 1;
+    
     calcApp.user = $scope.CalcApp.user;
     $scope.playerName = calcApp.user;
+    calcApp.level = $scope.CalcApp.level;
 
-  // tell other controllers, that the playerName has changed
-    $scope.$emit('::changePlayerEvent');
+    // tell other controllers, that the playerName has changed
+    $rootScope.$emit('::changePlayerEvent', calcApp.user);
 
     // highscores, etc ...
     
+    $rootScope.$emit('::fetchNewCalculationEvent', $scope.CalcApp.level);
 
   } else {
     // no object or user here - display a friendly reminder
     $scope.modalOpen();
+
+    $scope.CalcApp.level = calcApp.level = 1; // start with this level
+    $scope.$emit('::fetchNewCalculationEvent', $scope.CalcApp.level);
   }
 
   
