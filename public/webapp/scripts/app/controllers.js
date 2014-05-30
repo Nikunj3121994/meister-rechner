@@ -2,12 +2,16 @@
 
 /* Controllers */
 
+
+// ------------------------------------------------------
+// MenuController
+// ------------------------------------------------------
 calcApp.controller('MenuController', ['$scope', '$rootScope', function($scope, $rootScope) {
 
   // ------------------------------------------------------
   // init scope
   // ------------------------------------------------------
-  $scope.playerName = 'NIEMAND';
+  $scope.playerName = '';
 
   // ------------------------------------------------------
   // events
@@ -17,8 +21,10 @@ calcApp.controller('MenuController', ['$scope', '$rootScope', function($scope, $
    * pass the playerName of the targetScope onto this scope
    */
   var unbind = $rootScope.$on('::changePlayerEvent', function(args, playerName){
-    $scope.playerName = playerName;
-    args.stopPropagation(); // ok - done here
+    if(playerName && playerName !== '') {
+      $scope.playerName = playerName;
+      args.stopPropagation(); // ok - done here
+    }
   });
   $scope.$on('$destroy', unbind);
 
@@ -30,10 +36,21 @@ calcApp.controller('MenuController', ['$scope', '$rootScope', function($scope, $
     $rootScope.$emit('::startChangePlayerEvent');
   }
 
+  /**
+   * trigger the validate event to check the input data against the
+   * backend logic
+   */
+  $scope.validateResults = function() {
+    $rootScope.$emit('::validateResultsEvent');
+  }
+
 }]);
 
 
-calcApp.controller('MainController', ['$scope',
+// ------------------------------------------------------
+// IntroController
+// ------------------------------------------------------
+calcApp.controller('IntroController', ['$scope',
   '$rootScope',
   'storageService',
   '$location',
@@ -41,7 +58,51 @@ calcApp.controller('MainController', ['$scope',
   '$http',
   function ($scope, $rootScope, storageService, $location, $modal, $http) {
 
-  var calcApp = {};
+  // ------------------------------------------------------
+  // init scope
+  // ------------------------------------------------------
+  $scope.playerName = '';
+  $scope.CalcApp = {};
+
+  // ------------------------------------------------------
+  // actions / events
+  // ------------------------------------------------------
+
+  $scope.ok = function(valid) {
+    if(!valid) {
+      return;
+    }
+
+    try {
+      $scope.CalcApp.user = $scope.playerName;
+      // save the entry
+      storageService.set('CalcApp', $scope.CalcApp);
+    
+      // tell other controllers, that the playerName has changed
+      $rootScope.$emit('::changePlayerEvent', $scope.CalcApp.user);
+
+      // start with the game
+      $location.path('/');
+
+    } catch(err) {
+      console.log(err);
+      alert('Ein Fehler ist aufgetreten!');
+    }
+  };
+
+}]);
+
+
+// ------------------------------------------------------
+// MainController
+// ------------------------------------------------------
+calcApp.controller('MainController', ['$scope',
+  '$rootScope',
+  'storageService',
+  '$location',
+  '$modal',
+  '$http',
+  function ($scope, $rootScope, storageService, $location, $modal, $http) {
 
   // ------------------------------------------------------
   // init scope
@@ -80,12 +141,11 @@ calcApp.controller('MainController', ['$scope',
 
       try {
         $scope.CalcApp.user = $scope.playerName;
-        calcApp.user = $scope.playerName;
         // save the entry
-        storageService.set('CalcApp', calcApp);
+        storageService.set('CalcApp', $scope.CalcApp);
       
         // tell other controllers, that the playerName has changed
-        $rootScope.$emit('::changePlayerEvent', calcApp.user);
+        $rootScope.$emit('::changePlayerEvent', $scope.CalcApp.user);
 
       } catch(err) {
         console.log(err);
@@ -149,6 +209,31 @@ calcApp.controller('MainController', ['$scope',
   });
   $scope.$on('$destroy', newCalculation);
 
+  /**
+   * validate the input data 
+   */
+  var valideResults = $rootScope.$on('::validateResultsEvent', function(args) {
+    
+    var postData = JSON.stringify($scope.CalcApp);
+    $http({
+        url: './api/1.0/calculation',
+        method: 'POST',
+        data: postData,
+        headers: {'Content-Type': 'application/json'}
+    }).success(function(data) {
+
+      if(data && data.user === $scope.CalcApp.user && data.calculation.entries &&
+        data.calculation.entries.length === $scope.CalcApp.calculation.entries.length) {
+        $scope.CalcApp = data;
+      }
+    })
+    .error(function(data, status, headers) {
+      alert('Error: ' + data + '\nHTTP-Status: ' + status);
+    });
+
+  });
+  $scope.$on('$destroy', valideResults);
+
 
   // ------------------------------------------------------
   // startup events
@@ -156,15 +241,11 @@ calcApp.controller('MainController', ['$scope',
 
   // check if there is a local user
   if(storageService.get('CalcApp') && storageService.get('CalcApp').user) {
-    $scope.CalcApp.user = storageService.get('CalcApp').user;
+    $scope.CalcApp.user = $scope.playerName = storageService.get('CalcApp').user;
     $scope.CalcApp.level = storageService.get('CalcApp').level || 1;
-    
-    calcApp.user = $scope.CalcApp.user;
-    $scope.playerName = calcApp.user;
-    calcApp.level = $scope.CalcApp.level;
 
     // tell other controllers, that the playerName has changed
-    $rootScope.$emit('::changePlayerEvent', calcApp.user);
+    $rootScope.$emit('::changePlayerEvent', $scope.playerName);
 
     // highscores, etc ...
     
@@ -172,10 +253,13 @@ calcApp.controller('MainController', ['$scope',
 
   } else {
     // no object or user here - display a friendly reminder
-    $scope.modalOpen();
+    // $scope.modalOpen();
 
-    $scope.CalcApp.level = calcApp.level = 1; // start with this level
-    $scope.$emit('::fetchNewCalculationEvent', $scope.CalcApp.level);
+    // $scope.CalcApp.level = 1; // start with this level
+    // $scope.$emit('::fetchNewCalculationEvent', $scope.CalcApp.level);
+
+    $location.path('/intro');
+    return;
   }
 
   

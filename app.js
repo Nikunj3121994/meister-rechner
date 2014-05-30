@@ -21,6 +21,14 @@ var app = express();
 // Application setup
 // --------------------------------------------------------------------------
 
+function customHeaders( req, res, next ){
+  // Switch off the default 'X-Powered-By: Express' header
+  app.disable( 'X-Powered-By' );
+  // OR set your own header here
+  res.setHeader( 'X-Powered-By', 'meister-rechner ' + config.version.number);
+  next();
+}
+
 app.configure(function(){
   app.set('view engine', 'jade');
 
@@ -29,6 +37,8 @@ app.configure(function(){
   app.set('views', __dirname + '/app/views');
   
   app.use(express.favicon());
+  // do some header mangling
+  app.use(customHeaders);
 
   // Logging
   // Use winston on production
@@ -71,8 +81,9 @@ app.configure(function(){
   } else if(env === 'production') {
     app.use(express.static(path.join(__dirname, 'public/webapp/dist')));
   }
-});
 
+
+});
 
 
 // --------------------------------------------------------------------------
@@ -132,6 +143,8 @@ app.use(function(req, res, next){
   // default to plain-text. send()
   res.type('txt').send('Not found');
 });
+
+
 
 
 // --------------------------------------------------------------------------

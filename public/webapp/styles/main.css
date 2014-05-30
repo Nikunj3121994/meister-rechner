@@ -21,9 +21,18 @@ body {
 }
 
 .jumbotron {
-  padding-top: 10px;
+  padding-top: 12px;
   padding-bottom: 10px;
   margin-bottom: 10px;
+}
+
+.jumbotron h2 {
+  margin-top:10px;
+  font-size: 28px;
+}
+
+.jumbotron p {
+  font-size: 18px;
 }
 
 .input-inline {
@@ -70,8 +79,7 @@ body {
 }
 
 .calculation {
-  padding-bottom: 20px;
-  
+
 }
 
 .check-calc {
@@ -79,7 +87,7 @@ body {
 }
 
 .font-large {
-  font-size:24pt;
+  font-size:16pt;
 }
 
 .calc-number {
@@ -112,7 +120,7 @@ body {
 
 .carousel-indicators {
   position: relative;
-  bottom: 0px;
+  bottom: 0;
 }
 
 .carousel-indicators .active {
@@ -124,6 +132,35 @@ body {
 }
 
 .account-name {
-  font-size: 20pt;
+  font-size: 16pt;
+}
+
+hr {
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+
+.page-icon {
+  margin-top:12px;
+}
+
+.input-error {
+  background-color:#fdf7f7;
+  border: solid 1px #d9534f;
+}
+
+.input-correct {
+  background-color:#fdf7f7;
+  border: solid 1px #d9534f;
+}
+
+.indicator-success {
+  font-size:32px;
+  color: #13987e;
+}
+
+.indicator-error {
+  font-size:32px;
+  color: #df2e1b;
 }
 

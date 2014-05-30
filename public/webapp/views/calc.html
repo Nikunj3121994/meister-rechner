@@ -1,11 +1,8 @@
-<div class="jumbotron">
-    <h2><img src="images/calculator.png" title="Rechner" /> Hallo <span ng-if="playerName !== 'NIEMAND'">{{ CalcApp.user }}, <span>Rechen-Kaiser!
-    <span class="pull-right">
-        <button type="button" class="btn btn-large btn-success font-large"><i class="fa fa-check-square-o"></i> Auflösung</button>
-    </span>
+<!--<div class="jumbotron">
+    <h2> Hallo <span ng-if="playerName !== 'NIEMAND'">{{ CalcApp.user }}, <span>Rechen-Kaiser!
     </h2>
     <p>Löse die Rechnungen und sammle Punkte!!!</p>
-</div>
+</div>-->
 
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -37,7 +34,9 @@
         <span ng-if="calc.operation === 0" class="badge badge-lg badge-success">+</span> 
         <span ng-if="calc.operation === 1" class="badge badge-lg badge-error">-</span> 
         <span class="calc-number info">{{ calc.num2 }}</span> <span class="badge badge-lg badge-block">=</span> 
-        <input type="text" class="form-control input-lg input-inline" placeholder="??" ng-model="calc.result"/>
+        <input type="number" class="form-control input-lg input-inline" placeholder="??" ng-model="calc.result" ng-class="{'input-error': calc.check === false}"/>
+        <i class="fa fa-check indicator-success" ng-if="calc.check === true"></i>
+        <i class="fa fa-times indicator-error" ng-if="calc.check === false"></i>
 
       </div>
     </div>  

@@ -5,9 +5,10 @@
  */
 'use strict';
 
-var version = require('../config/version');
 var calculation = require('../config/calculation');
-
+var base = require('./base');
+var logger = require('../util/logger' );
+var _ = require('lodash');
 
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
@@ -57,12 +58,13 @@ function getCalculation(maxNumber) {
       }
     }
   }
+
   return calc;
 }
 
 /*
  * url: /calculation/:level
- * get a document by the given id
+ * create a calculation for a given level
  */
 exports.newCalculation = function(req, res){
   var level = req.params.level,
@@ -80,10 +82,39 @@ exports.newCalculation = function(req, res){
       calc.entries.push(getCalculation(maxNumber));
     }
 
-    res.json(calc);
+    base.jsonNoCache(res, calc);
   } else {
     return res.send('Wrong level parameter supplied! ', 500);
   }
+};
 
+/*
+ * url: /calculation
+ * verify the calculation
+ */
+exports.verifyCalculation = function(req, res) {
+  var toVerify,
+      check = false;
+  try {
+
+    toVerify = req.body;
+    logger.dump(toVerify);
+
+    _.forEach(toVerify.calculation.entries, function(item) {
+      check = false;
+      if(item.operation === 0) {
+        check = (item.num1 + item.num2 === item.result);
+      } else if(item.operation === 1) {
+        check = (item.num1 - item.num2 === item.result);
+      }
+      item.check = check;
+    });
+
+    base.jsonNoCache(res, toVerify);
+
+  } catch(err) {
+    console.log('Got an error: ' + err);
+    console.log(err.stack);
+  }
   
 };

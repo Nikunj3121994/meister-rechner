@@ -15,12 +15,12 @@ calcApp
     .config(['$routeProvider', '$httpProvider',
         function ($routeProvider, $httpProvider) {
             $routeProvider
-                .when('/<abc>', {
-                    templateUrl: 'views/document.html',
-                    controller: 'DocumentController'
+                .when('/intro', {
+                    templateUrl: 'views/intro.html',
+                    controller: 'IntroController'
                 })
                 .otherwise({
-                    templateUrl: 'views/main.html',
+                    templateUrl: 'views/calc.html',
                     controller: 'MainController'
                 })
         }])
