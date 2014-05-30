@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Meister-Rechner | Mathematik Lernspiel</title>
+        <title>Rechen-Meister | Mathematik Lernspiel</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Habe Spaß mit Mathematik; üben von Grundrechnungsarten.">
         <meta name="author" content="Henrik Binggl">
@@ -41,18 +41,17 @@
                 <img src="images/calculator32x32.png" title="Rechner" width="32" widht="32" alt="Rechner" class="page-icon"/>
               </div>
               <a class="navbar-brand" href="/">
-                 Der Rechen-Meister!!
+                 Rechen-Meister!!
               </a>
               
 
             </div>
             <div class="collapse navbar-collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Startseite</a></li>
-                <li ng-if="playerName !== ''"><a href="#/highscore">Punktestand</a></li>
+                <li ng-if="playerName !== ''"><a href="#/highscore">Punkte</a></li>
               </ul>
                 <ul class="pull-right nav navbar-nav" ng-if="playerName !== ''">
-                    <li><button type="button" class="btn btn-large btn-success font-large" style="margin-top:4px" ng-click="validateResults()"><i class="fa fa-check-square-o"></i> Auflösung</button></li>
+                    
                     <li><a href="#" class="account-name" ng-click="changePlayerName()"> <i class="fa fa-user"></i> {{ playerName }}</a></li>
                   </ul>
             </div>

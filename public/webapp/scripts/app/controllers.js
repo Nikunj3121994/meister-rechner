@@ -36,14 +36,6 @@ calcApp.controller('MenuController', ['$scope', '$rootScope', function($scope, $
     $rootScope.$emit('::startChangePlayerEvent');
   }
 
-  /**
-   * trigger the validate event to check the input data against the
-   * backend logic
-   */
-  $scope.validateResults = function() {
-    $rootScope.$emit('::validateResultsEvent');
-  }
-
 }]);
 
 
@@ -173,6 +165,14 @@ calcApp.controller('MainController', ['$scope',
       $modalInstance.dismiss('cancel');
     };
   };
+
+  /**
+   * trigger the validate event to check the input data against the
+   * backend logic
+   */
+  $scope.validateResults = function() {
+    $rootScope.$emit('::validateResultsEvent');
+  }
 
 
   // ------------------------------------------------------
