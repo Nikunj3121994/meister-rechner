@@ -150,13 +150,13 @@ hr {
 }
 
 .input-error {
-  background-color:#fdf7f7;
-  border: solid 1px #d9534f;
+  background-color:#f2dede;
+  border: solid 1px #f2dede;
 }
 
 .input-correct {
-  background-color:#fdf7f7;
-  border: solid 1px #d9534f;
+  background-color:#d6e9c6;
+  border: solid 1px #d6e9c6;
 }
 
 .indicator-success {
@@ -169,3 +169,10 @@ hr {
   color: #df2e1b;
 }
 
+
+.score {
+  font-size: 20pt;
+  font-weight: bold;
+  vertical-align: middle;
+  margin-right: 20px;
+}

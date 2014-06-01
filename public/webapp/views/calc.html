@@ -21,8 +21,13 @@
     
     <button type="button" class="btn btn-large btn-success font-large" style="margin-top:4px" ng-click="validateResults()"><i class="fa fa-check-square-o"></i> Auflösung</button>
 
+
+
   </div>
   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align:right">
+
+    <span class="score" ng-if="CalcApp.score"><i class="fa fa-asterisk"></i> {{ CalcApp.score }}</span>
+
     <button type="button" class="btn btn-large btn-info font-large" style="margin-top:4px" ng-click="next()" ng-disabled="true!=false"><i class="fa fa-paper-plane-o"></i>  Weiter!</button>
   </div>
 
@@ -39,13 +44,12 @@
         </h3>
       </div>
       <div class="panel-body">
-        <i class="fa fa-check indicator-success" ng-if="calc.check === true"></i>
-        <i class="fa fa-times indicator-error" ng-if="calc.check === false"></i>
+        
         <span class="calc-number info">{{ calc.num1 }}</span> 
         <span ng-if="calc.operation === 0" class="badge badge-lg badge-success">+</span> 
         <span ng-if="calc.operation === 1" class="badge badge-lg badge-error">-</span> 
         <span class="calc-number info">{{ calc.num2 }}</span> <span class="badge badge-lg badge-block">=</span> 
-        <input type="number" class="form-control input-lg input-inline" placeholder="??" ng-model="calc.result" ng-class="{'input-error': calc.check === false}"/>
+        <input type="number" class="form-control input-lg input-inline" placeholder="??" ng-model="calc.result" ng-class="{'input-error': calc.check === false}" />
         
 
       </div>

@@ -94,11 +94,14 @@ exports.newCalculation = function(req, res){
  */
 exports.verifyCalculation = function(req, res) {
   var toVerify,
-      check = false;
+      check = false,
+      numCorrect = 0;
+
   try {
 
     toVerify = req.body;
     logger.dump(toVerify);
+
 
     _.forEach(toVerify.calculation.entries, function(item) {
       check = false;
@@ -107,9 +110,13 @@ exports.verifyCalculation = function(req, res) {
       } else if(item.operation === 1) {
         check = (item.num1 - item.num2 === item.result);
       }
+      if(check === true) {
+        numCorrect += 1;
+      }
       item.check = check;
     });
 
+    toVerify.score = calculation.scores[numCorrect];
     base.jsonNoCache(res, toVerify);
 
   } catch(err) {
