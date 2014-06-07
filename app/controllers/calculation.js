@@ -15,26 +15,29 @@ var _ = require('lodash');
  * Using Math.round() will give you a non-uniform distribution!
  */
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return _.random(min, max);
 }
 
 /**
  * create a calculation
  */
-function getCalculation(maxNumber) {
+function getCalculation(minNumber, maxNumber) {
   var calc = {},
       num1 = 0,
       num2 = 0,
       operation = 0;    // 0 = +, 1 = -
 
-  num1 = getRandomInt(0, maxNumber);
+  num1 = getRandomInt(minNumber, maxNumber);
   if(num1 === 0) {
-    num1 = getRandomInt(1, maxNumber);
+    num1 = getRandomInt(minNumber, maxNumber);
   }
-  num2 = getRandomInt(0, maxNumber);
+  num2 = getRandomInt(minNumber, maxNumber);
   if(num2 === 0) {
-    num2 = getRandomInt(1, maxNumber);
+    num2 = getRandomInt(minNumber, maxNumber);
   }
+
+  console.log('num1: ' + num1);
+  console.log('num2: ' + num2);
 
   operation = getRandomInt(0, 1);
 
@@ -69,17 +72,21 @@ function getCalculation(maxNumber) {
 exports.newCalculation = function(req, res){
   var level = req.params.level,
       maxNumber,
-      calc;
+      calc,
+      minNumber = 1;
 
   if(level > 0 && level <= calculation.levels) {
     // create calculations in the range from 0 to maxNumber    
     maxNumber = calculation.level[level-1].maxNumber;
+    minNumber = calculation.level[level-1].minNumber;
 
     calc = {};
     calc.maxNumber = maxNumber;
     calc.entries = [];
+
     for(var i=0;i<6;i++) {
-      calc.entries.push(getCalculation(maxNumber));
+      console.log('min: ' + minNumber + ' max: ' + maxNumber);
+      calc.entries.push(getCalculation(minNumber, maxNumber));
     }
 
     base.jsonNoCache(res, calc);
@@ -95,14 +102,13 @@ exports.newCalculation = function(req, res){
 exports.verifyCalculation = function(req, res) {
   var toVerify,
       check = false,
-      numCorrect = 0;
+      numCorrect = 0,
+      level = 0;
 
   try {
 
     toVerify = req.body;
-    logger.dump(toVerify);
-
-
+    
     _.forEach(toVerify.calculation.entries, function(item) {
       check = false;
       if(item.operation === 0) {
@@ -117,6 +123,27 @@ exports.verifyCalculation = function(req, res) {
     });
 
     toVerify.score = calculation.scores[numCorrect];
+    toVerify.totalScore = toVerify.totalScore + toVerify.score;
+    // recalculate the level
+    _.forEach(calculation.level, function(item, index) {
+
+      if(toVerify.totalScore > item.score) {
+        level = index;
+        level += 1; // 0-based index
+        level += 1; // level-score is the upper-bound, so we are in the next level
+
+        if(level >= calculation.levels) { // limit to max level
+          level = calculation.levels;
+        }
+      }
+    });
+    if(level === 0) { // not enough score
+      level = 1;
+    }
+    toVerify.level = level;
+
+    logger.dump(toVerify);
+
     base.jsonNoCache(res, toVerify);
 
   } catch(err) {

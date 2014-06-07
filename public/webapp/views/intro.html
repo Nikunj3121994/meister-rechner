@@ -1,15 +1,32 @@
 <div class="jumbotron">
-    <h2> Hallo <span>Rechen-Kaiser!</span></h2>
+		<div class="pull-left">
+      <img src="images/calculator64x64.png" title="Rechner" width="64" widht="64" alt="Rechner" class="page-icon"/>
+    </div>
+    <h2> Hallo <span>Rechen-Meister!</span></h2>
     <p>Löse die verschiednene Rechnungen und sammle Punkte!!!</p>
+    <p>
+		Im Spiel gibt es 5 verschiedene Levels (<i class="fa fa-star"></i> Level). In jedem Level werden die Zahlen größer und schwieriger. Um ein neues Level zu erreichen, muss man Punkte sammeln. Punkte (<i class="fa fa-asterisk"></i>) bekommt man durch richtige Rechnungen.
+		</p>
+		<ul>
+			<li>6 Rechnungen ... <b>10 Punkte</b></li>
+			<li>5 Rechnungen ... <b>5 Punkte</b></li>
+			<li>4 Rechnungen ... <b>3 Punkte</b></li>
+			<li>3 Rechnungen ... <b>2 Punkte</b></li>
+			<li>2 Rechnungen ... <b>1 Punkt</b></li>
+			<li>1 Rechnung   ... <b>0 Punkt</b></li>
+		</ul>
+		<p>
+		In jedem Level musst du <b>30</b> Punkte sammeln.
+    </p>
 </div>
 
 <div class="row">
 	<div class="col-12">
 
 		<form name="form1" class="form-inline" role="form" novalidate>
-		  <div class="form-group" style="padding-left:20px">
+		  <div class="form-group-full" >
 		    <label class="sr-only" for="playerName">Spielername</label>
-		    <input type="text" class="form-control input-lg" id="playerName" placeholder="Gib deinen Namen ein!" required ng-model="playerName" style="text-align:left"/>
+		    <input ng-if="!CalcApp.user" type="text" class="form-control-full input-lg-full" id="playerName" placeholder="Gib deinen Namen ein!" required ng-model="playerName" style="text-align:left"/>
 		  </div>
 		  <div class="pull-right" style="padding-right:20px">
 		  	<button type="button" class="btn btn-lg btn-info" ng-click="ok(form1.$valid)" ng-disabled="form1.$invalid">Weiter zum Spiel!</button>

@@ -1,34 +1,30 @@
-<!--<div class="jumbotron">
-    <h2> Hallo <span ng-if="playerName !== 'NIEMAND'">{{ CalcApp.user }}, <span>Rechen-Kaiser!
-    </h2>
-    <p>Löse die Rechnungen und sammle Punkte!!!</p>
-</div>-->
-
 <div class="row">
-  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
       <div>
-        <h4 class="info"><i class="fa fa-star"></i> Level {{ CalcApp.level }}</h4>
+        <h4 class="info"><i class="fa fa-star"></i> Level {{ CalcApp.levelDisplay }}</h4>
+        <span class="current-score-title"><i class="fa fa-graduation-cap"></i> Punkte</span>
+        <span class="current-score">{{ CalcApp.totalScoreDisplay }}</span>
       </div>
       <ol class="carousel-indicators">
-        <li class="" ng-class="{'active': CalcApp.level === 1}"></li>
-        <li class="" ng-class="{'active': CalcApp.level === 2}"></li>
-        <li class="" ng-class="{'active': CalcApp.level === 3}"></li>
-        <li class="" ng-class="{'active': CalcApp.level === 4}"></li>
-        <li class="" ng-class="{'active': CalcApp.level === 5}"></li>
+        <li class="" ng-class="{'active': CalcApp.levelDisplay === 1}"></li>
+        <li class="" ng-class="{'active': CalcApp.levelDisplay === 2}"></li>
+        <li class="" ng-class="{'active': CalcApp.levelDisplay === 3}"></li>
+        <li class="" ng-class="{'active': CalcApp.levelDisplay === 4}"></li>
+        <li class="" ng-class="{'active': CalcApp.levelDisplay === 5}"></li>
       </ol>
-  </div>
-  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align:center">
-    
-    <button type="button" class="btn btn-large btn-success font-large" style="margin-top:4px" ng-click="validateResults()"><i class="fa fa-check-square-o"></i> Auflösung</button>
-
-
 
   </div>
-  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align:right">
+  
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="text-align:right">
 
     <span class="score" ng-if="CalcApp.score"><i class="fa fa-asterisk"></i> {{ CalcApp.score }}</span>
+    
 
-    <button type="button" class="btn btn-large btn-info font-large" style="margin-top:4px" ng-click="next()" ng-disabled="true!=false"><i class="fa fa-paper-plane-o"></i>  Weiter!</button>
+
+    <button type="button" class="btn btn-large btn-info font-large" style="margin-top:4px" ng-click="next()" ng-if="CalcApp.validated === true"><i class="fa fa-paper-plane-o"></i>  Weiter!</button>
+
+    <button type="button" class="btn btn-large btn-success font-large" style="margin-top:4px" ng-click="validateResults()" ng-if="CalcApp.validated === false"><i class="fa fa-check-square-o"></i> Auflösung</button>
+
   </div>
 
 </div>

@@ -50,6 +50,17 @@ body {
   vertical-align: super;
 }
 
+.input-lg-full {
+  height: 64px;
+  padding: 6px 5px;
+  font-size: 24pt;
+  line-height: 1.33;
+  border-radius: 6px;
+  text-align: center;
+  width: 100%;
+  vertical-align: super;
+}
+
 .center {
   text-align: center
 }
@@ -175,4 +186,32 @@ hr {
   font-weight: bold;
   vertical-align: middle;
   margin-right: 20px;
+}
+
+.form-group-full {
+  width:100%;
+  padding-left:20px;
+  padding-right:20px;
+  padding-bottom: 20px;
+}
+
+.form-control-full {
+  width:100%;
+}
+
+h4.info {
+  display: inline-block;
+}
+
+.current-score-title {
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.current-score {
+  margin-left: 5px;
+  font-weight: bold;
+  color: #5cb85c;
+  font-size: large;
 }

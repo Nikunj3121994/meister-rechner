@@ -82,6 +82,24 @@ calcApp.controller('IntroController', ['$scope',
     }
   };
 
+
+  // ------------------------------------------------------
+  // startup events
+  // ------------------------------------------------------
+
+  // check if there is a local user
+  if(storageService.get('CalcApp') && storageService.get('CalcApp').user) {
+    $scope.CalcApp.user = $scope.playerName = storageService.get('CalcApp').user;
+    $scope.CalcApp.level = storageService.get('CalcApp').level || 1;
+    $scope.CalcApp.levelDisplay = $scope.CalcApp.level;
+    $scope.CalcApp.totalScore = storageService.get('CalcApp').totalScore || 0;
+    $scope.CalcApp.totalScoreDisplay = $scope.CalcApp.totalScore;
+    $scope.CalcApp.validated = false;
+
+    $scope.playerName = $scope.CalcApp.user;
+  }
+
+
 }]);
 
 
@@ -172,7 +190,29 @@ calcApp.controller('MainController', ['$scope',
    */
   $scope.validateResults = function() {
     $rootScope.$emit('::validateResultsEvent');
-  }
+  };
+
+  /**
+   * the results were validated, get me some new calculations
+   */
+  $scope.next = function() {
+    try {
+      $scope.CalcApp.totalScoreDisplay = $scope.CalcApp.totalScore;
+      $scope.CalcApp.levelDisplay = $scope.CalcApp.level;
+      $scope.CalcApp.score = undefined;
+      $scope.CalcApp.calculation = undefined;
+      $scope.CalcApp.validated = false;
+
+      // save the current values
+      storageService.set('CalcApp', $scope.CalcApp);
+
+      // get me fresh calculations
+      $rootScope.$emit('::fetchNewCalculationEvent', $scope.CalcApp.level);
+    } catch(err) {
+      console.log('Error: ' + err);
+      alert('An error occured: ' + err);
+    }
+  };
 
 
   // ------------------------------------------------------
@@ -194,7 +234,7 @@ calcApp.controller('MainController', ['$scope',
   var newCalculation = $rootScope.$on('::fetchNewCalculationEvent', function(args, level){
     args.stopPropagation(); // stop the event here
     console.log('Fetch calculation! ' + level);
-
+    $scope.CalcApp.validated = false;
     $http.get('./api/1.0/calculation/' + level).success(function(data) {
 
       // got the data - preset the selection
@@ -213,7 +253,7 @@ calcApp.controller('MainController', ['$scope',
    * validate the input data 
    */
   var valideResults = $rootScope.$on('::validateResultsEvent', function(args) {
-    
+    $scope.CalcApp.validated = false;
     var postData = JSON.stringify($scope.CalcApp);
     $http({
         url: './api/1.0/calculation',
@@ -225,9 +265,12 @@ calcApp.controller('MainController', ['$scope',
       if(data && data.user === $scope.CalcApp.user && data.calculation.entries &&
         data.calculation.entries.length === $scope.CalcApp.calculation.entries.length) {
         $scope.CalcApp = data;
+
+        $scope.CalcApp.validated = true;
       }
     })
     .error(function(data, status, headers) {
+      $scope.CalcApp.validated = false;
       alert('Error: ' + data + '\nHTTP-Status: ' + status);
     });
 
@@ -243,6 +286,10 @@ calcApp.controller('MainController', ['$scope',
   if(storageService.get('CalcApp') && storageService.get('CalcApp').user) {
     $scope.CalcApp.user = $scope.playerName = storageService.get('CalcApp').user;
     $scope.CalcApp.level = storageService.get('CalcApp').level || 1;
+    $scope.CalcApp.levelDisplay = $scope.CalcApp.level;
+    $scope.CalcApp.totalScore = storageService.get('CalcApp').totalScore || 0;
+    $scope.CalcApp.totalScoreDisplay = $scope.CalcApp.totalScore;
+    $scope.CalcApp.validated = false;
 
     // tell other controllers, that the playerName has changed
     $rootScope.$emit('::changePlayerEvent', $scope.playerName);
