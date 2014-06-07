@@ -332,12 +332,12 @@ module.exports = function (grunt) {
         'copy:images4styles'
       ]
     },
-    karma: {
+    /*karma: {
       unit: {
         configFile: 'tests/karma.conf.js',
         singleRun: true
       }
-    },
+    },*/
     cdnify: {
       dist: {
         html: ['<%= yeoman.dist %>/*.html']

@@ -34,3 +34,5 @@ public/node_modules/
 node_modules
 data
 public/webapp/bower_components/
+public/.tmp
+public/webapp/dist
