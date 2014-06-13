@@ -38,6 +38,9 @@ app.configure(function(){
   app.use(express.favicon());
   // do some header mangling
   app.use(customHeaders);
+  if(!env || env === 'production') {
+    app.use(express.compress());
+  }
 
   // Logging
   // Use winston on production
@@ -66,21 +69,13 @@ app.configure(function(){
   app.use(require('connect-multiparty')());
   app.use(express.methodOverride());
   app.use(express.cookieParser(config.application.secret));
-  app.use(express.session());
-
-  app.use(express.session({
-    secret: config.application.secret,
-    store: new FileStore({path: path.join(__dirname, 'session'), printDebug: false, useAsync: true})
-  }));
-
   app.use(app.router);
 
   if(!env || env === 'development') {
     app.use(express.static(path.join(__dirname, 'public/webapp')));
   } else if(env === 'production') {
     // New call to compress content
-    app.use(express.compress());
-    app.use(express.static(path.join(__dirname, 'public/webapp/dist'), { maxAge: 1296000 } ));
+    app.use(express.static(path.join(__dirname, 'public/webapp/dist'), { maxAge: 86400000 } ));
   }
 
 });
