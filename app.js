@@ -15,7 +15,7 @@ var config = require('./app/config/application');
 var env = process.env.NODE_ENV || 'development';
 
 var app = express();
-var oneDay = 86400000;
+var oneWeek = 86400000 * 7;
 
 
 // --------------------------------------------------------------------------
@@ -83,7 +83,7 @@ app.configure(function(){
     // New call to compress content
     app.use(express.compress());
 
-    app.use(express.static(path.join(__dirname, 'public/webapp/dist'), { maxAge: oneDay } ));
+    app.use(express.static(path.join(__dirname, 'public/webapp/dist'), { maxAge: oneWeek } ));
   }
 
 });
