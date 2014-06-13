@@ -46,7 +46,7 @@ app.configure(function(){
   // and default express.logger on dev
   var log;
   if (env !== 'development') {
-    winston.add(winston.transports.File, { filename: 'mydms.log' });
+    winston.add(winston.transports.File, { filename: '/var/log/node/meister-rechner-app.log' });
     winston.remove(winston.transports.Console);
     log = {
       stream: {
