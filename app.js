@@ -15,6 +15,7 @@ var config = require('./app/config/application');
 var env = process.env.NODE_ENV || 'development';
 
 var app = express();
+var oneDay = 86400000;
 
 
 // --------------------------------------------------------------------------
@@ -79,12 +80,15 @@ app.configure(function(){
   if(!env || env === 'development') {
     app.use(express.static(path.join(__dirname, 'public/webapp')));
   } else if(env === 'production') {
-    app.use(express.static(path.join(__dirname, 'public/webapp/dist')));
-  }
+    // New call to compress content
+    app.use(express.compress());
 
+    app.use(express.static(path.join(__dirname, 'public/webapp/dist'), { maxAge: oneDay } ));
+  }
 
 });
 
+app.locals.basePath = config.application.basePath;
 
 // --------------------------------------------------------------------------
 // error handling
@@ -105,8 +109,6 @@ app.configure(function(){
 // would remain being executed, however here
 // we simply respond with an error page.
 
-// define some settings
-app.locals.basePath = config.application.basePath;
 app.enable(config.errorDetails);
 
 app.use(function(err, req, res, next){
@@ -178,6 +180,11 @@ app.configure('development', function () {
     next();
   });
 
+});
+
+// production is behind a proxy
+app.configure('production', function () {
+  app.enable('trust proxy');
 });
 
 
