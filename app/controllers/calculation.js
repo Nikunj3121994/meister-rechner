@@ -12,6 +12,7 @@ var _ = require('lodash');
 var randomstring = require('randomstring');
 var fs = require('fs');
 var path = require('path');
+var async = require('async');
 
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
@@ -160,36 +161,30 @@ exports.saveScore = function(req, res) {
       uniqueId = '',
       payload = '',
       fileName = '';
-
-  try {
     
-    userScore = req.body;
+  userScore = req.body;
 
-    logger.dump(userScore);
+  logger.dump(userScore);
 
-    uniqueId = userScore.uid;
-    if(!uniqueId || uniqueId === '') {
-      uniqueId = randomstring.generate(5);
-      userScore.uid = uniqueId;
-    }
-
-    // take the object and persist it on the filesystem
-    payload = JSON.stringify(userScore);
-    fileName = path.join(__dirname, '../../store', uniqueId + '.json');
-
-    fs.writeFile(fileName, payload, function(err) {
-      if(err) {
-        throw err;
-      } else {
-        return res.send(uniqueId, 200);
-      }
-    });
-
-  } catch(err) {
-    console.log('Got an error: ' + err);
-    console.log(err.stack);
-    return res.send('Could not save the user-score! ' + err, 500);
+  uniqueId = userScore.uid;
+  if(!uniqueId || uniqueId === '') {
+    uniqueId = randomstring.generate(5);
+    userScore.uid = uniqueId;
   }
+
+  // take the object and persist it on the filesystem
+  payload = JSON.stringify(userScore);
+  fileName = path.join(__dirname, '../../store', uniqueId + '.json');
+
+  fs.writeFile(fileName, payload, function(err) {
+    if(err) {
+      console.log('Got an error: ' + err);
+      console.log(err.stack);
+      return res.send('Could not save the user-score! ' + err, 500);
+    } else {
+      return res.send(uniqueId, 200);
+    }
+  });
 };
 
 
@@ -202,30 +197,34 @@ exports.getScore = function(req, res) {
       fileName,
       uid = req.params.uid;
 
-  try {
+  fileName = path.join(__dirname, '../../store', uid + '.json');
 
-    fileName = path.join(__dirname, '../../store', uid + '.json');
-
-    // only return if the file exists
-    fs.exists(fileName, function (exists) {
-      if(!exists) {
-        return res.send('Could not get the user-score!', 404);
-      }
-
+  async.waterfall([
+    function(callback){
+      fs.exists(fileName, function (exists) {
+        if(!exists) {
+          return callback('Does not exist!');
+        }
+        callback(null);
+      });
+    },
+    function(callback){
       fs.readFile(fileName, function (err, data) {
         if (err) {
-          throw err;
+          return callback(err);
         }
-        
         userScore = JSON.parse(data);
-
-        base.jsonNoCache(res, userScore);
+        callback(null, userScore);
       });
-    });
+    }
+  ], function (err, result) {
+    if(err) {
+      console.log('Got an error: ' + err);
+      console.log(err.stack);
+      return res.send('Could not get the user-score! ' + err, 500);
+    }
 
-  } catch(err) {
-    console.log('Got an error: ' + err);
-    console.log(err.stack);
-    return res.send('Could not get the user-score! ' + err, 500);
-  }
+    base.jsonNoCache(res, result);
+  });
+
 };

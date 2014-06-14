@@ -24,10 +24,18 @@
 	<div class="col-12">
 
 		<form name="form1" class="form-inline" role="form" novalidate>
-		  <div class="form-group-full" >
+		  <div class="form-group-full" ng-hide="CalcApp.user == ''">
 		    <label class="sr-only" for="playerName">Spielername</label>
-		    <input ng-if="!CalcApp.user" type="text" class="form-control-full input-lg-full" id="playerName" placeholder="Gib deinen Namen ein!" required ng-model="playerName" style="text-align:left"/>
+		    <input 
+		    	type="text" 
+		    	class="form-control-full input-lg-full" 
+		    	id="playerName" 
+		    	placeholder="Gib deinen Namen ein!" 
+		    	required 
+		    	ng-model="playerName" 
+		    	style="text-align:left"/>
 		  </div>
+		  
 		  <div class="pull-right" style="padding-right:20px">
 		  	<button type="button" class="btn btn-lg btn-info" ng-click="ok(form1.$valid)" ng-disabled="form1.$invalid">Weiter zum Spiel!</button>
 
