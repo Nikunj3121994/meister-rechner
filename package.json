@@ -16,7 +16,8 @@
     "lodash": "~2.4.0",
     "async": "~0.2.9",
     "winston": "~0.7.3",
-    "connect-session-file": "~1.0.4"
+    "connect-session-file": "~1.0.4",
+    "node-uuid": "~1.4.1"
   },
   "devDependencies": {
     "mocha": "1.x"

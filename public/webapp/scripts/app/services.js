@@ -59,3 +59,39 @@ calcApp.factory('storageService', ['$rootScope', function($rootScope) {
     }
   };
 }]);
+
+
+/**
+ * service to retrieve the stored user-object
+ */
+calcApp.factory('userService', ['$rootScope', 'storageService', function($rootScope, storageService) {
+  var CalcApp = {};
+
+  return {
+    /**
+     * retrieve the necessary data for the user object
+     */
+    get: function() {
+      // check if there is a local user
+      if(storageService.get('CalcApp') && storageService.get('CalcApp').user) {
+        CalcApp.user = storageService.get('CalcApp').user;
+        CalcApp.level = storageService.get('CalcApp').level || 1;
+        CalcApp.levelDisplay = CalcApp.level;
+        CalcApp.totalScore = storageService.get('CalcApp').totalScore || 0;
+        CalcApp.totalScoreDisplay = CalcApp.totalScore;
+        CalcApp.validated = false;
+        CalcApp.uid = storageService.get('CalcApp').uid;
+
+        return CalcApp;
+      } else {
+        return null;
+      }
+    },
+    /**
+     * save the object 
+     */
+    set: function(object) {
+      storageService.set('CalcApp', object);
+    }
+  };
+}]);

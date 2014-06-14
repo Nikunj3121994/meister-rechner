@@ -16,4 +16,6 @@ exports.setup = function(app) {
   app.get('/api/' + API + '/version', baseController.version);
   app.get('/api/' + API + '/calculation/:level', calcController.newCalculation);
   app.post('/api/' + API + '/calculation', calcController.verifyCalculation);
+  app.post('/api/' + API + '/savescore', calcController.saveScore);
+  app.get('/api/' + API + '/getscore/:uid', calcController.getScore);
 };

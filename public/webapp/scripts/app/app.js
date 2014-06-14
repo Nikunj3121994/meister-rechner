@@ -19,6 +19,10 @@ calcApp
                     templateUrl: 'views/intro.html',
                     controller: 'IntroController'
                 })
+                .when('/settings', {
+                    templateUrl: 'views/settings.html',
+                    controller: 'SettingsController'
+                })
                 .otherwise({
                     templateUrl: 'views/calc.html',
                     controller: 'MainController'

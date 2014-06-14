@@ -1,0 +1,71 @@
+<div class="jumbotron">
+    <div class="pull-left">
+      <img src="images/calculator64x64.png" title="Rechner" width="64" widht="64" alt="Rechner" class="page-icon"/>
+    </div>
+    <h2> Hallo <span>Rechen-Meister!</span></h2>
+    <p>Speichere deine Ergebnisse und rechne auf einem anderen Gerät weiter!</p>
+    
+</div>
+
+<div class="row">
+  <div class="col-12">
+
+    <div class="alert alert-success" ng-if="saveSuccess === true">
+      <strong>Gut gemacht!</strong> Dein Level wurde erfolgreich gespeichert. <br/>
+      Mit dieser Nummer kannst du auf einem anderen Gerät weiterspielen <b>{{ CalcApp.uid }}</b>
+    </div>
+
+    <div style="padding-left:20px;padding-right:20px">
+       <h3>{{ CalcApp.user }}</h3>
+
+       <div>
+        <h4 class="info"><i class="fa fa-star"></i> Level {{ CalcApp.levelDisplay }}</h4>
+        <span class="current-score-title"><i class="fa fa-graduation-cap"></i> Punkte</span>
+        <span class="current-score">{{ CalcApp.totalScoreDisplay }}</span>
+        </div>
+        <ol class="carousel-indicators">
+          <li class="" ng-class="{'active': CalcApp.levelDisplay === 1}"></li>
+          <li class="" ng-class="{'active': CalcApp.levelDisplay === 2}"></li>
+          <li class="" ng-class="{'active': CalcApp.levelDisplay === 3}"></li>
+          <li class="" ng-class="{'active': CalcApp.levelDisplay === 4}"></li>
+          <li class="" ng-class="{'active': CalcApp.levelDisplay === 5}"></li>
+        </ol>
+
+      </div>
+      <div class="pull-right" style="padding-right:20px">
+        <button type="button" class="btn btn-lg btn-success" ng-click="save()">Speichern!</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-12">
+
+       <div style="padding-left:20px;padding-right:20px">
+        <div class="alert alert-success" ng-if="loadSuccess === true">
+          <strong>Gut gemacht!</strong> Die Ergebnisse wurde erfolgreich geladen!</b>
+        </div>
+
+        <h3>Die Daten von einem anderen Gerät laden!</h3>
+       </div>
+    
+       
+
+        <form name="form1" class="form-inline" role="form" novalidate>
+      <div class="form-group-full" >
+        <label class="sr-only" for="playerName">Code</label>
+        <input type="text" class="form-control-full input-lg-full" id="playerName" placeholder="Gib deinen Code ein!" required ng-model="fetchCode" style="text-align:left"/>
+      </div>
+      <div class="pull-right" style="padding-right:20px">
+        <button type="button" class="btn btn-lg btn-info" ng-click="load(form1.$valid)" ng-disabled="form1.$invalid">Laden!</button>
+
+      </div>
+      
+    </form> 
+      
+  </div>
+
+</div>

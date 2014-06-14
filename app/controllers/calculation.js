@@ -9,10 +9,12 @@ var calculation = require('../config/calculation');
 var base = require('./base');
 var logger = require('../util/logger' );
 var _ = require('lodash');
+var randomstring = require('randomstring');
+var fs = require('fs');
+var path = require('path');
 
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
- * Using Math.round() will give you a non-uniform distribution!
  */
 function getRandomInt(min, max) {
   return _.random(min, max);
@@ -35,9 +37,6 @@ function getCalculation(minNumber, maxNumber) {
   if(num2 === 0) {
     num2 = getRandomInt(minNumber, maxNumber);
   }
-
-  console.log('num1: ' + num1);
-  console.log('num2: ' + num2);
 
   operation = getRandomInt(0, 1);
 
@@ -85,7 +84,6 @@ exports.newCalculation = function(req, res){
     calc.entries = [];
 
     for(var i=0;i<6;i++) {
-      console.log('min: ' + minNumber + ' max: ' + maxNumber);
       calc.entries.push(getCalculation(minNumber, maxNumber));
     }
 
@@ -150,5 +148,84 @@ exports.verifyCalculation = function(req, res) {
     console.log('Got an error: ' + err);
     console.log(err.stack);
   }
-  
+};
+
+
+/*
+ * url: /savescore
+ * save the current user-score
+ */
+exports.saveScore = function(req, res) {
+  var userScore,
+      uniqueId = '',
+      payload = '',
+      fileName = '';
+
+  try {
+    
+    userScore = req.body;
+
+    logger.dump(userScore);
+
+    uniqueId = userScore.uid;
+    if(!uniqueId || uniqueId === '') {
+      uniqueId = randomstring.generate(5);
+      userScore.uid = uniqueId;
+    }
+
+    // take the object and persist it on the filesystem
+    payload = JSON.stringify(userScore);
+    fileName = path.join(__dirname, '../../store', uniqueId + '.json');
+
+    fs.writeFile(fileName, payload, function(err) {
+      if(err) {
+        throw err;
+      } else {
+        return res.send(uniqueId, 200);
+      }
+    });
+
+  } catch(err) {
+    console.log('Got an error: ' + err);
+    console.log(err.stack);
+    return res.send('Could not save the user-score! ' + err, 500);
+  }
+};
+
+
+/*
+ * url: /getscore
+ * get the score for a given id
+ */
+exports.getScore = function(req, res) {
+  var userScore,
+      fileName,
+      uid = req.params.uid;
+
+  try {
+
+    fileName = path.join(__dirname, '../../store', uid + '.json');
+
+    // only return if the file exists
+    fs.exists(fileName, function (exists) {
+      if(!exists) {
+        return res.send('Could not get the user-score!', 404);
+      }
+
+      fs.readFile(fileName, function (err, data) {
+        if (err) {
+          throw err;
+        }
+        
+        userScore = JSON.parse(data);
+
+        base.jsonNoCache(res, userScore);
+      });
+    });
+
+  } catch(err) {
+    console.log('Got an error: ' + err);
+    console.log(err.stack);
+    return res.send('Could not get the user-score! ' + err, 500);
+  }
 };

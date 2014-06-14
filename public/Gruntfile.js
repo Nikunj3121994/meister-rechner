@@ -46,53 +46,6 @@ module.exports = function (grunt) {
         }]
       }
     },
-    connect: {
-      proxies: [
-        {
-          context: '/app',
-          host: 'localhost',
-          port: 8080,
-          https: false,
-          changeOrigin: false
-        }
-      ],
-      options: {
-        port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
-        livereload: 35729
-      },
-      livereload: {
-        options: {
-          open: true,
-          base: [
-            '.tmp',
-            'webapp'
-          ],
-          middleware: function (connect) {
-            return [
-              proxySnippet,
-              connect.static(require('path').resolve('webapp'))
-            ];
-          }
-        }
-      },
-      test: {
-        options: {
-         port: 9001,
-          base: [
-            '.tmp',
-            'test',
-            'webapp'
-          ]
-        }
-      },
-      dist: {
-        options: {
-          base: '<%= yeoman.dist %>'
-        }
-      }
-    },
     clean: {
       dist: {
         files: [{
@@ -115,30 +68,6 @@ module.exports = function (grunt) {
         'webapp/scripts/{,*/}*.js'
       ]
     },
-    coffee: {
-      options: {
-        sourceMap: true,
-        sourceRoot: ''
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: 'webapp/scripts',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
-    },
     // not used since Uglify task does concat,
     // but still available if needed
     /*concat: {
@@ -157,13 +86,13 @@ module.exports = function (grunt) {
       }
     },
     useminPrepare: {
-      html: 'webapp/index.html',
+      html: ['webapp/index.html', 'webapp/views/{,*/}*.html'],
       options: {
         dest: '<%= yeoman.dist %>'
       }
     },
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/{,*/}*.html', '<%= yeoman.dist %>/views/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
@@ -354,6 +283,10 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
+      options: {
+        mangle: false,
+        beautify: false
+      },
       dist: {
         files: {
           '<%= yeoman.dist %>/scripts/scripts.js': [
