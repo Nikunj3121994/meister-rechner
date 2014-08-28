@@ -70,6 +70,10 @@ function getCalculation(minNumber, maxNumber) {
     calc.num2 += 1;
   }
 
+  if(calc.num1 === 0) {
+    calc.num1 += 1;
+  }
+
   return calc;
 }
 
