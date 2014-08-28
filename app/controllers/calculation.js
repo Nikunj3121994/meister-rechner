@@ -38,7 +38,6 @@ function getCalculation(minNumber, maxNumber) {
   if(num2 === 0) {
     num2 = getRandomInt(minNumber, maxNumber);
   }
-
   operation = getRandomInt(0, 1);
 
   calc.num1 = num1;
@@ -60,6 +59,15 @@ function getCalculation(minNumber, maxNumber) {
         calc.num2 = maxNumber - calc.num2;
       }
     }
+  }
+
+  // not the same numbers
+  if(calc.num1 === calc.num2) {
+    calc.num1 += 1;
+  }
+
+  if(calc.num2 === 0) {
+    calc.num2 += 1;
   }
 
   return calc;
