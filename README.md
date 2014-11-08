@@ -1,7 +1,7 @@
 meister-rechner
 ===============
 
-Simple mathematical learining webapp
+Simple mathematical learning webapp
 
 ## Hints
 
